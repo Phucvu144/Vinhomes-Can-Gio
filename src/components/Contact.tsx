@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Loader2, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2, CheckCircle, Copy, QrCode } from 'lucide-react';
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [transactionCode, setTransactionCode] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -13,12 +14,20 @@ export default function Contact() {
     message: ''
   });
 
+  const generateTransactionCode = () => {
+    const randomNum = Math.floor(100000 + Math.random() * 900000);
+    return `BDS${randomNum}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const code = generateTransactionCode();
+    setTransactionCode(code);
+
     // THAY URL MỚI NHẤT CỦA BẠN VÀO ĐÂY SAU KHI DEPLOY LẠI
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbynWO7jlhkLDf5CAcZjH459tKfTvqzfedlPKVOEDueu3-ghK2WOFRv_zjlh3yBSysFU-g/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz69cdQb8zH7S5Fv6bLeBWptIz4JpwkHWbuJfDdjXMJt7mGbxRALTtAmIkSmH77LGUQ7Q/exec";
 
     try {
       // Chuyển data sang URLSearchParams để Apps Script đọc được e.parameter
@@ -28,6 +37,7 @@ export default function Contact() {
       searchParams.append('email', formData.email);
       searchParams.append('interest', formData.product);
       searchParams.append('message', formData.message);
+      searchParams.append('transactionCode', code); // Gửi kèm mã giao dịch để đối soát
 
       await fetch(WEB_APP_URL, {
         method: 'POST',
@@ -48,9 +58,16 @@ export default function Contact() {
     }
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert('Đã sao chép mã giao dịch!');
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const qrUrl = `https://qr.sepay.vn/img?bank=MB&acc=0399182294&template=compact&amount=19000&des=${transactionCode}`;
 
   return (
     <section id="contact" className="py-20 bg-white relative overflow-hidden">
@@ -97,7 +114,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Right: Form */}
+          {/* Right: Form / Payment */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -109,15 +126,63 @@ export default function Contact() {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-12 space-y-6"
+                className="text-center space-y-6"
               >
                 <div className="flex justify-center">
-                  <CheckCircle size={80} className="text-green-600" />
+                  <div className="bg-green-100 p-3 rounded-full">
+                    <CheckCircle size={48} className="text-green-600" />
+                  </div>
                 </div>
-                <h3 className="text-3xl font-serif text-slate-900">Gửi thành công!</h3>
-                <p className="text-gray-600">Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
-                <button onClick={() => setIsSuccess(false)} className="text-orange-600 font-bold uppercase text-sm hover:underline">
-                  Gửi yêu cầu khác
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-serif text-slate-900">Đăng ký thành công!</h3>
+                  <p className="text-gray-600 text-sm">Vui lòng hoàn tất thanh toán để nhận bộ tài liệu.</p>
+                </div>
+
+                <div className="bg-white p-6 rounded-3xl shadow-inner space-y-4 border border-orange-100">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="relative group">
+                      <img 
+                        src={qrUrl} 
+                        alt="QR Thanh Toán" 
+                        className="w-48 h-48 rounded-xl shadow-md border-4 border-white"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-lg shadow-lg">
+                        <QrCode size={16} />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-1 text-center">
+                      <p className="text-xs text-gray-400 uppercase font-bold tracking-widest">Số tiền cần thanh toán</p>
+                      <p className="text-3xl font-sans font-bold text-orange-600">19.000đ</p>
+                    </div>
+
+                    <div className="w-full pt-4 border-t border-gray-100 space-y-3">
+                      <div className="flex items-center justify-between bg-orange-50 p-3 rounded-xl">
+                        <div className="text-left">
+                          <p className="text-[10px] text-gray-400 uppercase font-bold">Nội dung chuyển khoản</p>
+                          <p className="text-lg font-mono font-bold text-slate-900">{transactionCode}</p>
+                        </div>
+                        <button 
+                          onClick={() => copyToClipboard(transactionCode)}
+                          className="p-2 hover:bg-orange-200 rounded-lg transition-colors text-orange-600"
+                          title="Sao chép mã"
+                        >
+                          <Copy size={20} />
+                        </button>
+                      </div>
+                      <p className="text-[10px] text-gray-400 italic">
+                        * Hệ thống sẽ tự động xác nhận sau khi nhận được thanh toán.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => setIsSuccess(false)} 
+                  className="text-orange-600 font-bold uppercase text-xs hover:underline tracking-widest"
+                >
+                  Quay lại trang chủ
                 </button>
               </motion.div>
             ) : (
@@ -146,10 +211,15 @@ export default function Contact() {
                     <option>Căn hộ cao cấp</option>
                   </select>
                 </div>
-                <button disabled={isSubmitting} type="submit" className="w-full py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-sm disabled:opacity-70">
-                  {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
-                  {isSubmitting ? 'Đang gửi...' : 'Gửi Yêu Cầu Tư Vấn'}
-                </button>
+                <div className="pt-2">
+                  <p className="text-xs text-gray-400 mb-4 italic">
+                    Phí đăng ký tài liệu: <span className="text-orange-600 font-bold">19.000đ</span> (Thanh toán qua QR sau khi gửi thông tin)
+                  </p>
+                  <button disabled={isSubmitting} type="submit" className="w-full py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-sm disabled:opacity-70">
+                    {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
+                    {isSubmitting ? 'Đang xử lý...' : 'Gửi & Thanh Toán'}
+                  </button>
+                </div>
               </form>
             )}
           </motion.div>

@@ -82,7 +82,7 @@ export default function Overview() {
                 <CheckCircle2 className="text-gold mt-1 shrink-0" size={18} />
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-wider font-bold">{item.label}</p>
-                  <p className="text-gray-800 font-medium">{item.value}</p>
+                  <p className="text-gray-800 font-sans font-medium">{item.value}</p>
                 </div>
               </div>
             ))}
