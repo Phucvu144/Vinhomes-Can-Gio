@@ -60,11 +60,11 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-white/60">
               <li className="flex items-start gap-3">
                 <Phone size={18} className="text-gold shrink-0" />
-                <span>0399 182 294</span>
+                <span className="font-sans">0399 182 294</span>
               </li>
               <li className="flex items-start gap-3">
                 <Mail size={18} className="text-gold shrink-0" />
-                <span>vuquangphuc.it@gmail.com</span>
+                <span className="font-sans">vuquangphuc.it@gmail.com</span>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-gold shrink-0" />
@@ -75,7 +75,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40 uppercase tracking-widest">
-          <p>© 2024 Vinhomes Green Paradise Cần Giờ. All rights reserved.</p>
+          <p>© 2026 Vinhomes Green Paradise Cần Giờ. All rights reserved.</p>
           <p>Phát triển bởi Đại lý TOP 1 Vinhomes miền Nam</p>
         </div>
       </div>

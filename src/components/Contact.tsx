@@ -82,7 +82,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">Hotline 24/7</p>
-                  <p className="text-xl font-serif text-slate-900">0399 182 294</p>
+                  <p className="text-xl font-sans text-slate-900">0399 182 294</p>
                 </div>
               </div>
               <div className="flex items-center gap-6 group">
@@ -91,7 +91,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">Email hỗ trợ</p>
-                  <p className="text-xl font-serif text-slate-900">vuquangphuc.it@gmail.com</p>
+                  <p className="text-xl font-sans text-slate-900">vuquangphuc.it@gmail.com</p>
                 </div>
               </div>
             </div>

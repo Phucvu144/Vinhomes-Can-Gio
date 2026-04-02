@@ -68,19 +68,19 @@ export default function Hero() {
         <ChevronDown size={32} />
       </motion.div>
 
-      {/* Floating Stats (Optional) */}
+      {/* Floating Action Stats (Optional) */}
       <div className="absolute bottom-0 left-0 w-full hidden lg:block">
         <div className="max-w-7xl mx-auto px-12 py-10 grid grid-cols-3 border-t border-white/10 backdrop-blur-sm">
           <div className="text-center border-r border-white/10">
-            <p className="text-3xl font-serif text-gold">2.870ha</p>
+            <p className="text-3xl font-sans font-bold text-gold">2.870ha</p>
             <p className="text-xs text-white/60 uppercase tracking-widest mt-1">Quy mô dự án</p>
           </div>
           <div className="text-center border-r border-white/10">
-            <p className="text-3xl font-serif text-gold">13km</p>
+            <p className="text-3xl font-sans font-bold text-gold">13km</p>
             <p className="text-xs text-white/60 uppercase tracking-widest mt-1">Đường bờ biển</p>
           </div>
           <div className="text-center">
-            <p className="text-3xl font-serif text-gold">5 Phân Khu</p>
+            <p className="text-3xl font-sans font-bold text-gold">5 Phân Khu</p>
             <p className="text-xs text-white/60 uppercase tracking-widest mt-1">Đa dạng trải nghiệm</p>
           </div>
         </div>

@@ -87,7 +87,7 @@ export default function Products() {
                 <h3 className="text-2xl font-serif text-primary">{product.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{product.description}</p>
                 <div className="pt-4 flex items-center justify-between border-t border-gray-100">
-                  <span className="text-accent font-bold text-lg">{product.price}</span>
+                  <span className="text-accent font-sans font-bold text-lg">{product.price}</span>
                   <button className="text-primary font-bold text-sm uppercase tracking-widest hover:text-accent transition-colors">
                     Chi Tiết →
                   </button>

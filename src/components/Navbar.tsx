@@ -64,7 +64,7 @@ export default function Navbar() {
           <a
             href="tel:0399182294"
             className={cn(
-              "flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all",
+              "flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-sans font-bold transition-all",
               isScrolled 
                 ? "bg-primary text-white hover:bg-primary-light shadow-lg" 
                 : "bg-white/20 backdrop-blur-md text-white border border-white/30 hover:bg-white/30"
@@ -106,7 +106,7 @@ export default function Navbar() {
               ))}
               <a
                 href="tel:0399182294"
-                className="flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-bold"
+                className="flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-sans font-bold"
               >
                 <Phone size={18} />
                 Hotline: 0399 182 294
